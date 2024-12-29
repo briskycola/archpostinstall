@@ -10,6 +10,6 @@ This script is specifically designed for
 ## Install
 Run the following commands in the terminal
 ```
-curl -L0 https://raw.githubusercontent.com/santiagotorres0054/archpostinstall/start.sh
+curl -LO https://raw.githubusercontent.com/santiagotorres0054/archpostinstall/refs/heads/main/start.sh
 bash start.sh
 ```
