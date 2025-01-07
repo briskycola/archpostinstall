@@ -71,7 +71,7 @@ function installKDE()
     echo "Installing KDE along with some applications and tools"
     sudo pacman -S --noconfirm plasma-desktop dolphin dolphin-plugins ffmpegthumbs ark konsole okular gwenview \
     kscreen firefox mpv yt-dlp ffmpeg zed kde-gtk-config breeze-gtk plasma-pa plasma-nm power-profiles-daemon  \
-    ufw sddm sddm-kcm
+    partitionmanager ufw sddm sddm-kcm
 }
 
 function startPostInstall()
