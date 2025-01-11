@@ -72,6 +72,12 @@ function installKDE()
     sudo pacman -S --noconfirm plasma-desktop dolphin dolphin-plugins ffmpegthumbs ark konsole okular gwenview \
     kscreen firefox mpv yt-dlp ffmpeg zed kde-gtk-config breeze-gtk plasma-pa plasma-nm power-profiles-daemon  \
     partitionmanager ufw sddm sddm-kcm
+
+    # Check if the computer has bluetooth support
+    lsusb | grep -i bluetooth > /dev/null
+    if [ $? -eq 0 ]; then
+        sudo pacman -S bluez bluez-utils
+    fi
 }
 
 function startPostInstall()
