@@ -96,7 +96,7 @@ function startPostInstall()
     # Install the 'yay' AUR helper
     echo "Installing yay AUR helper"
     git clone https://aur.archlinux.org/yay.git
-    cd yay/ ; makepkg -si ; cd ..
+    cd yay/ ; makepkg --noconfirm -si ; cd ..
 
     # Install KDE along with some applications and tools
     echo "Installing KDE along with some applications and tools"
