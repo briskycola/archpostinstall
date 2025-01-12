@@ -73,8 +73,14 @@ function installKDE()
     kscreen firefox mpv yt-dlp ffmpeg zed kde-gtk-config breeze-gtk plasma-pa plasma-nm power-profiles-daemon  \
     usbutils partitionmanager ufw sddm sddm-kcm
 
-    # Check if the computer has bluetooth support
+    # Check if the computer has USB bluetooth devices
     lsusb | grep -i bluetooth > /dev/null
+    if [ $? -eq 0 ]; then
+        sudo pacman -S bluez bluez-utils bluedevil
+    fi
+
+    # Check if the computer has PCIe bluetooth devices
+    lspci | grep -i bluetooth > /dev/null
     if [ $? -eq 0 ]; then
         sudo pacman -S bluez bluez-utils bluedevil
     fi
