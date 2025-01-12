@@ -11,5 +11,5 @@ This script is specifically designed for
 Run the following commands in the terminal
 ```
 curl -LO https://raw.githubusercontent.com/santiagotorres0054/archpostinstall/refs/heads/main/start.sh
-bash start.sh
+sudo bash start.sh
 ```
