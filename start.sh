@@ -27,31 +27,31 @@ function installGPUDrivers
 
         if   [ $USER_CHOICE = '1' ]; then
             echo "Installing AMDGPU drivers"
-            sudo pacman -S --noconfirm xf86-video-amdgpu mesa vulkan-radeon
+            pacman -S --noconfirm xf86-video-amdgpu mesa vulkan-radeon
             break
         elif [ $USER_CHOICE = '2' ]; then
             echo "Installing ATI drivers"
-            sudo pacman -S --noconfirm xf86-video-ati mesa
+            pacman -S --noconfirm xf86-video-ati mesa
             break
         elif [ $USER_CHOICE = '3' ]; then
             echo "Installing Intel drivers"
-            sudo pacman -S --noconfirm xf86-video-intel mesa vulkan-intel
+            pacman -S --noconfirm xf86-video-intel mesa vulkan-intel
             break
         elif [ $USER_CHOICE = '4' ]; then
             echo "Installing NVIDIA (open) drivers"
-            sudo pacman -S --noconfirm nvidia-open nvidia-utils nvidia-settings
+            pacman -S --noconfirm nvidia-open nvidia-utils nvidia-settings
             break
         elif [ $USER_CHOICE = '5' ]; then
             echo "Installing NVIDIA drivers"
-            sudo pacman -S --noconfirm nvidia nvidia-utils nvidia-settings
+            pacman -S --noconfirm nvidia nvidia-utils nvidia-settings
             break
         elif [ $USER_CHOICE = '6' ]; then
             echo "Installing Nouveau drivers"
-            sudo pacman -S --noconfirm xf86-video-nouveau mesa vulkan-nouveau
+            pacman -S --noconfirm xf86-video-nouveau mesa vulkan-nouveau
             break
         elif [ $USER_CHOICE = '7' ]; then
             echo "Installing QEMU VirtIO/QXL drivers"
-            sudo pacman -S --noconfirm xf86-video-qxl qemu-hw-display-qxl \
+            pacman -S --noconfirm xf86-video-qxl qemu-hw-display-qxl \
             qemu-hw-display-virtio-gpu vulkan-virtio
             break
         else
@@ -63,16 +63,26 @@ function installGPUDrivers
 
 function installBluetooth()
 {
-    # Check if the computer has USB bluetooth devices
-    lsusb | grep -i bluetooth > /dev/null
-    if [ $? -eq 0 ]; then
-        sudo pacman -S bluez bluez-utils bluedevil
-    fi
-
     # Check if the computer has PCIe bluetooth devices
+    echo "Checking for PCIe Bluetooth Devices"
     lspci | grep -i bluetooth > /dev/null
     if [ $? -eq 0 ]; then
-        sudo pacman -S bluez bluez-utils bluedevil
+        echo "Found PCIe Bluetooth"
+        echo "Installing Bluetooth utilities"
+        pacman -S bluez bluez-utils bluedevil
+    else
+        echo "No PCIe Bluetooth devices were found"
+    fi
+
+    # Check if the computer has USB bluetooth devices
+    echo "Checking for USB Bluetooth Devices"
+    lsusb | grep -i bluetooth > /dev/null
+    if [ $? -eq 0 ]; then
+        echo "Found USB Bluetooth"
+        echo "Installing Bluetooth utilities"
+        pacman -S bluez bluez-utils bluedevil
+    else
+        echo "No USB Bluetooth devices were found"
     fi
 }
 
@@ -80,11 +90,11 @@ function installKDE()
 {
     # Install PipeWire
     echo "Installing PipeWire audio server"
-    sudo pacman -S --noconfirm pipewire pipewire-pulse pipewire-alsa pipewire-jack wireplumber
+    pacman -S --noconfirm pipewire pipewire-pulse pipewire-alsa pipewire-jack wireplumber
 
     # Install KDE along with some applications and tools
     echo "Installing KDE along with some applications and tools"
-    sudo pacman -S --noconfirm plasma-desktop dolphin dolphin-plugins ffmpegthumbs ark konsole okular gwenview \
+    pacman -S --noconfirm plasma-desktop dolphin dolphin-plugins ffmpegthumbs ark konsole okular gwenview \
     kscreen firefox mpv yt-dlp ffmpeg zed kde-gtk-config breeze-gtk plasma-pa plasma-nm power-profiles-daemon  \
     usbutils partitionmanager ufw sddm sddm-kcm
 
@@ -103,20 +113,20 @@ function startPostInstall()
 
     # Install essentials for AUR helper
     echo "Installing essentials packages (git base-devel linux-headers)"
-    sudo pacman -S --noconfirm base-devel linux-headers git
+    pacman -S --noconfirm base-devel linux-headers git
 
     # Install KDE along with some applications and tools
     installKDE
 
     # Configure UFW
     echo "Configuring Firewall and enabling services"
-    sudo ufw default deny incoming
-    sudo ufw default allow outgoing
+    ufw default deny incoming
+    ufw default allow outgoing
 
     # Enable UFW and SDDM on startup
-    sudo ufw enable
-    sudo systemctl enable ufw
-    sudo systemctl enable sddm
+    ufw enable
+    systemctl enable ufw
+    systemctl enable sddm
 
     # Sucess message
     echo ""
@@ -124,6 +134,12 @@ function startPostInstall()
     echo "You may now restart your system"
     echo "Type 'sudo reboot' to restart into your new OS"
 }
+
+if [ $USER != "root" ]; then
+    echo "You must run this script as root"
+    echo "type 'sudo bash start.sh'"
+    exit 1
+fi
 
 echo ""
 echo "This is Santiago's Arch Linux post-installation script"
