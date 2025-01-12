@@ -102,13 +102,8 @@ function startPostInstall()
     installGPUDrivers
 
     # Install essentials for AUR helper
-    echo "Installing essentials for AUR (git base-devel linux-headers)"
+    echo "Installing essentials packages (git base-devel linux-headers)"
     sudo pacman -S --noconfirm base-devel linux-headers git
-
-    # Install the 'yay' AUR helper
-    echo "Installing yay AUR helper"
-    git clone https://aur.archlinux.org/yay.git
-    cd yay/ ; makepkg --noconfirm -si ; cd ..
 
     # Install KDE along with some applications and tools
     installKDE
@@ -129,15 +124,6 @@ function startPostInstall()
     echo "You may now restart your system"
     echo "Type 'sudo reboot' to restart into your new OS"
 }
-
-CURRENT_USER=$(whoami)
-if [ $CURRENT_USER != "root" ]; then
-    echo ""
-    echo "You must run as root"
-    echo ""
-    sudo bash start.sh
-    exit 0
-fi
 
 echo ""
 echo "This is Santiago's Arch Linux post-installation script"
