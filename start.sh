@@ -70,6 +70,7 @@ function installBluetooth()
         echo "Found PCIe Bluetooth"
         echo "Installing Bluetooth utilities"
         pacman -S bluez bluez-utils bluedevil
+        systemctl enable bluetooth
     else
         echo "No PCIe Bluetooth devices were found"
     fi
@@ -81,9 +82,17 @@ function installBluetooth()
         echo "Found USB Bluetooth"
         echo "Installing Bluetooth utilities"
         pacman -S bluez bluez-utils bluedevil
+        systemctl enable bluetooth
     else
         echo "No USB Bluetooth devices were found"
     fi
+}
+
+function installCUPS()
+{
+    echo "Installing CUPS for printing support"
+    pacman -S cups cups-pdf print-manager
+    systemctl enable cups
 }
 
 function installKDE()
@@ -100,6 +109,9 @@ function installKDE()
 
     # Install Bluetooth utilities if Bluetooth is supported
     installBluetooth
+
+    # Install CUPS for printing support
+    installCUPS
 }
 
 function startPostInstall()
