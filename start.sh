@@ -27,32 +27,32 @@ function installGPUDrivers
 
         if   [ $USER_CHOICE = '1' ]; then
             echo "Installing AMDGPU drivers"
-            pacman -S --noconfirm xf86-video-amdgpu mesa vulkan-radeon
+            pacman -S --noconfirm xf86-video-amdgpu mesa vulkan-radeon      > /dev/null 2>&1
             break
         elif [ $USER_CHOICE = '2' ]; then
             echo "Installing ATI drivers"
-            pacman -S --noconfirm xf86-video-ati mesa
+            pacman -S --noconfirm xf86-video-ati mesa                       > /dev/null 2>&1
             break
         elif [ $USER_CHOICE = '3' ]; then
             echo "Installing Intel drivers"
-            pacman -S --noconfirm xf86-video-intel mesa vulkan-intel
+            pacman -S --noconfirm xf86-video-intel mesa vulkan-intel        > /dev/null 2>&1
             break
         elif [ $USER_CHOICE = '4' ]; then
             echo "Installing NVIDIA (open) drivers"
-            pacman -S --noconfirm nvidia-open nvidia-utils nvidia-settings
+            pacman -S --noconfirm nvidia-open nvidia-utils nvidia-settings  > /dev/null 2>&1
             break
         elif [ $USER_CHOICE = '5' ]; then
             echo "Installing NVIDIA drivers"
-            pacman -S --noconfirm nvidia nvidia-utils nvidia-settings
+            pacman -S --noconfirm nvidia nvidia-utils nvidia-settings       > /dev/null 2>&1
             break
         elif [ $USER_CHOICE = '6' ]; then
             echo "Installing Nouveau drivers"
-            pacman -S --noconfirm xf86-video-nouveau mesa vulkan-nouveau
+            pacman -S --noconfirm xf86-video-nouveau mesa vulkan-nouveau    > /dev/null 2>&1
             break
         elif [ $USER_CHOICE = '7' ]; then
             echo "Installing QEMU VirtIO/QXL drivers"
             pacman -S --noconfirm xf86-video-qxl qemu-hw-display-qxl \
-            qemu-hw-display-virtio-gpu vulkan-virtio
+            qemu-hw-display-virtio-gpu vulkan-virtio                        > /dev/null 2>&1
             break
         else
             echo "You must select 1-7"
@@ -65,24 +65,24 @@ function installBluetooth()
 {
     # Check if the computer has PCIe bluetooth devices
     echo "Checking for PCIe Bluetooth Devices"
-    lspci | grep -i bluetooth > /dev/null
+    lspci | grep -i bluetooth                   > /dev/null
     if [ $? -eq 0 ]; then
         echo "Found PCIe Bluetooth"
         echo "Installing Bluetooth utilities"
-        pacman -S bluez bluez-utils bluedevil
-        systemctl enable bluetooth
+        pacman -S bluez bluez-utils bluedevil   > /dev/null 2>&1
+        systemctl enable bluetooth              > /dev/null 2>&1
     else
         echo "No PCIe Bluetooth devices were found"
     fi
 
     # Check if the computer has USB bluetooth devices
     echo "Checking for USB Bluetooth Devices"
-    lsusb | grep -i bluetooth > /dev/null
+    lsusb | grep -i bluetooth                   > /dev/null
     if [ $? -eq 0 ]; then
         echo "Found USB Bluetooth"
         echo "Installing Bluetooth utilities"
-        pacman -S bluez bluez-utils bluedevil
-        systemctl enable bluetooth
+        pacman -S bluez bluez-utils bluedevil   > /dev/null 2>&1
+        systemctl enable bluetooth              > /dev/null 2>&1
     else
         echo "No USB Bluetooth devices were found"
     fi
@@ -91,21 +91,21 @@ function installBluetooth()
 function installCUPS()
 {
     echo "Installing CUPS for printing support"
-    pacman -S cups cups-pdf print-manager
-    systemctl enable cups
+    pacman -S cups cups-pdf print-manager   > /dev/null 2>&1
+    systemctl enable cups                   > /dev/null 2>&1
 }
 
 function installKDE()
 {
     # Install PipeWire
     echo "Installing PipeWire audio server"
-    pacman -S --noconfirm pipewire pipewire-pulse pipewire-alsa pipewire-jack wireplumber
+    pacman -S --noconfirm pipewire pipewire-pulse pipewire-alsa pipewire-jack wireplumber   > /dev/null 2>&1
 
     # Install KDE along with some applications and tools
     echo "Installing KDE along with some applications and tools"
     pacman -S --noconfirm plasma-desktop dolphin dolphin-plugins ffmpegthumbs ark konsole okular gwenview \
     kscreen firefox mpv yt-dlp ffmpeg zed kde-gtk-config breeze-gtk plasma-pa plasma-nm power-profiles-daemon  \
-    usbutils partitionmanager ufw sddm sddm-kcm
+    usbutils partitionmanager ufw sddm sddm-kcm                                             > /dev/null 2>&1
 
     # Install Bluetooth utilities if Bluetooth is supported
     installBluetooth
@@ -120,25 +120,29 @@ function startPostInstall()
     echo "Starting post-installation"
     sleep 2
 
+    # Update Arch mirrors
+    echo "Updating Arch mirrors"
+    pacman -Syy > /dev/null 2>&1
+
     # Install GPU drivers
     installGPUDrivers
 
     # Install essentials for AUR helper
     echo "Installing essentials packages (git base-devel linux-headers)"
-    pacman -S --noconfirm base-devel linux-headers git
+    pacman -S --noconfirm base-devel linux-headers git > /dev/null 2>&1
 
     # Install KDE along with some applications and tools
     installKDE
 
     # Configure UFW
     echo "Configuring Firewall and enabling services"
-    ufw default deny incoming
-    ufw default allow outgoing
+    ufw default deny incoming   > /dev/null 2>&1
+    ufw default allow outgoing  > /dev/null 2>&1
 
     # Enable UFW and SDDM on startup
-    ufw enable
-    systemctl enable ufw
-    systemctl enable sddm
+    ufw enable              > /dev/null 2>&1
+    systemctl enable ufw    > /dev/null 2>&1
+    systemctl enable sddm   > /dev/null 2>&1
 
     # Sucess message
     echo ""
@@ -157,6 +161,7 @@ echo ""
 echo "This is Santiago's Arch Linux post-installation script"
 echo "This script installs a minimal version of KDE with only the tools that you need"
 echo "This script assumes that you have Arch Linux fully installed"
+echo ""
 
 while true; do
     read -p "Do you want to continue? y/n: " USER_CHOICE
