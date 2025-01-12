@@ -92,8 +92,8 @@ function installBluetooth()
 function installCUPS()
 {
     echo "Installing CUPS for printing support"
-    pacman -S --noconfirm cups cups-pdf print-manager   > /dev/null 2>&1
-    systemctl enable cups                               > /dev/null 2>&1
+    pacman -S --noconfirm cups cups-pdf print-manager system-config-printer     > /dev/null 2>&1
+    systemctl enable cups                                                       > /dev/null 2>&1
 }
 
 function installKDE()
