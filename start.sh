@@ -21,6 +21,7 @@ function installGPUDrivers
     echo "5. nvidia (Maxwell through Ada Lovelace)"
     echo "6. nouveau (open source NVIDIA drivers (for legacy cards))"
     echo "7. QEMU VirtIO/QXL"
+    echo ""
 
     while true; do
         read -p "Enter your choice: " USER_CHOICE
@@ -117,6 +118,7 @@ function installKDE()
 function startPostInstall()
 {
     # Start message
+    echo ""
     echo "Starting post-installation"
     sleep 2
 
@@ -146,7 +148,7 @@ function startPostInstall()
 
     # Sucess message
     echo ""
-    echo "Installation Successful"
+    echo "$(tput setaf 2)Installation Successful$(tput sgr0)"
     echo "You may now restart your system"
     echo "Type 'sudo reboot' to restart into your new OS"
 }
