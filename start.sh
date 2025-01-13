@@ -50,7 +50,7 @@ function startPostInstall()
 
 if [ $USER != "root" ]; then
     echo "You must run this script as root"
-    echo "type 'sudo bash start.sh'"
+    echo "type 'sudo ./start.sh'"
     exit 1
 fi
 
