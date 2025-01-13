@@ -21,7 +21,7 @@ kscreen firefox mpv yt-dlp ffmpeg zed kde-gtk-config breeze-gtk plasma-pa plasma
 usbutils partitionmanager ufw sddm sddm-kcm                                             > /dev/null 2>&1
 
 # Install Bluetooth utilities if Bluetooth is supported
-bash installBluetooth.sh
+bash scripts/installBluetooth.sh
 
 # Install CUPS for printing support
-bash installCUPS.sh
+bash scripts/installCUPS.sh

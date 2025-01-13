@@ -11,5 +11,18 @@
 # by Santiago Torres
 
 echo "Installing CUPS for printing support"
-pacman -S --noconfirm cups cups-pdf print-manager system-config-printer     > /dev/null 2>&1
-systemctl enable cups                                                       > /dev/null 2>&1
+pacman -S --noconfirm cups cups-pdf nss-mdns print-manager system-config-printer    > /dev/null 2>&1
+systemctl enable cups                                                               > /dev/null 2>&1
+systemctl enable avahi-daemon                                                       > /dev/null 2>&1
+
+# The following command will modify /etc/nsswitch.conf
+# to enable support for DNS-SD/mDNS.
+#
+# Some printers require the use of mDNS in order
+# to be discovered over the network.
+#
+# If you do not want or need mDNS functionality,
+# simply remove the following lines in /etc/nsswitch.conf
+#
+# mdns_minimal [NOTFOUND=return]
+sed -i '11c\hosts: mymachines mdns_minimal [NOTFOUND=return] resolve [!UNAVAIL=return] files myhostname dns' /etc/nsswitch.conf
