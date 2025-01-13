@@ -8,6 +8,11 @@ This script is specifically designed for
     2. New users who want a minimal Arch + KDE installation without doing the manual configuration
 
 ## Install
+If you have not installed git, you can install it by running
+```
+sudo pacman -S git
+```
+
 Run the following commands in the terminal
 ```
 git clone https://github.com/santiagotorres0054/archpostinstall
