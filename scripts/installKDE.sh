@@ -18,7 +18,7 @@ pacman -S --noconfirm pipewire pipewire-pulse pipewire-alsa pipewire-jack wirepl
 echo "Installing KDE along with some applications and tools"
 pacman -S --noconfirm plasma-desktop dolphin dolphin-plugins ffmpegthumbs ark konsole okular gwenview \
 kscreen firefox mpv yt-dlp ffmpeg zed kde-gtk-config breeze-gtk plasma-pa plasma-nm power-profiles-daemon  \
-usbutils partitionmanager ufw sddm sddm-kcm                                             > /dev/null 2>&1
+usbutils partitionmanager ufw plasma-firewall sddm sddm-kcm                             > /dev/null 2>&1
 
 # Install Bluetooth utilities if Bluetooth is supported
 bash scripts/installBluetooth.sh
