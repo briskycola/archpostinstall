@@ -24,10 +24,6 @@ function startPostInstall()
     # Install GPU drivers
     bash scripts/installGPUDrivers.sh
 
-    # Install essentials for AUR helper
-    echo "Installing essentials packages (git base-devel linux-headers)"
-    pacman -S --noconfirm base-devel linux-headers git > /dev/null 2>&1
-
     # Install KDE along with some applications and tools
     bash scripts/installKDE.sh
 
