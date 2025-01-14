@@ -17,5 +17,5 @@ Run the following commands in the terminal
 ```
 git clone https://github.com/santiagotorres0054/archpostinstall
 cd archpostinstall/
-sudo ./start.sh
+sudo ./install.sh
 ```
