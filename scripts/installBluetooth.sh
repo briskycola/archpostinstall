@@ -11,25 +11,13 @@
 # by Santiago Torres
 
 # Check if the computer has PCIe bluetooth devices
-echo "Checking for PCIe Bluetooth Devices"
-lspci | grep -i bluetooth                   > /dev/null
+echo "Checking for Bluetooth Devices"
+dmesg | grep -i bluetooth                   > /dev/null
 if [ $? -eq 0 ]; then
-    echo "Found PCIe Bluetooth"
+    echo "Found Bluetooth"
     echo "Installing Bluetooth utilities"
     pacman -S bluez bluez-utils bluedevil   > /dev/null 2>&1
     systemctl enable bluetooth              > /dev/null 2>&1
 else
-    echo "No PCIe Bluetooth devices were found"
-fi
-
-# Check if the computer has USB bluetooth devices
-echo "Checking for USB Bluetooth Devices"
-lsusb | grep -i bluetooth                   > /dev/null
-if [ $? -eq 0 ]; then
-    echo "Found USB Bluetooth"
-    echo "Installing Bluetooth utilities"
-    pacman -S bluez bluez-utils bluedevil   > /dev/null 2>&1
-    systemctl enable bluetooth              > /dev/null 2>&1
-else
-    echo "No USB Bluetooth devices were found"
+    echo "No Bluetooth devices were found"
 fi
