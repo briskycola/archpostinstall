@@ -12,8 +12,8 @@
 
 echo "Installing CUPS for printing support"
 pacman -S --noconfirm cups cups-pdf nss-mdns print-manager system-config-printer    > /dev/null 2>&1
-systemctl enable cups                                                               > /dev/null 2>&1
-systemctl enable avahi-daemon                                                       > /dev/null 2>&1
+systemctl enable cups.socket                                                        > /dev/null 2>&1
+systemctl enable avahi-daemon.socket                                                > /dev/null 2>&1
 
 # The following command will modify /etc/nsswitch.conf
 # to enable support for DNS-SD/mDNS.
