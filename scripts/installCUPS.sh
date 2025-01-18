@@ -22,7 +22,7 @@ systemctl enable avahi-daemon.socket                                            
 # to be discovered over the network.
 #
 # If you do not want or need mDNS functionality,
-# simply remove the following lines in /etc/nsswitch.conf
+# simply remove the following text in /etc/nsswitch.conf
 #
 # mdns_minimal [NOTFOUND=return]
 sed -i '11c\hosts: mymachines mdns_minimal [NOTFOUND=return] resolve [!UNAVAIL=return] files myhostname dns' /etc/nsswitch.conf
