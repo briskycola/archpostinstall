@@ -15,7 +15,7 @@ sudo pacman -S git
 
 Run the following commands in the terminal
 ```
-git clone https://github.com/santiagotorres0054/archpostinstall
+git clone https://github.com/briskycola/archpostinstall
 cd archpostinstall/
 sudo ./install.sh
 ```
