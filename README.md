@@ -4,8 +4,8 @@ This script installs the KDE Desktop enviornment with only the essential tools f
 ## Usage
 This script is specifically designed for
 
-    1. Advanced users who already have an understanding of Arch Linux, but want to automate the post-installation
-    2. New users who want a minimal Arch + KDE installation without doing the manual configuration
+1. Advanced users who already have an understanding of Arch Linux, but want to automate the post-installation
+1. New users who want a minimal Arch + KDE installation without doing the manual configuration
 
 ## Install
 If you have not installed git, you can install it by running
